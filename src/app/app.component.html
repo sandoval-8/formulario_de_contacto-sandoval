@@ -2,16 +2,18 @@
 
   <h2>Contact us</h2>
 
-  <form>
+  <form [formGroup]="form" (ngSubmit)="submit()">
     <div class="mb-3">
       <label for="nombre" class="form-label">Nombre</label>
-      <input type="text" class="form-control" id="nombre">
+      <input type="text" class="form-control" id="nombre" formControlName="nombre" #nombre>
 
-      <div class="alert alert-danger">
-        <div>
+      <div *ngIf="form.controls.nombre.invalid && (form.controls.nombre.dirty || form.controls.nombre.touched)"
+           class="alert alert-danger">
+
+        <div *ngIf="form.controls.nombre.errors?.['required']">
           El nombre es requerido
         </div>
-        <div>
+        <div *ngIf="form.controls.nombre.errors?.['minlength']">
           Debe tener un largo minimo de 4 caracteres.
         </div>
       </div>
@@ -20,15 +22,16 @@
 
     <div class="mb-3">
       <label for="apellido" class="form-label">Apellido</label>
-      <input type="text" class="form-control" id="apellido">
+      <input type="text" class="form-control" id="apellido" formControlName="apellido" #apellido>
     </div>
 
     <div class="mb-3">
       <label for="email" class="form-label">Email</label>
-      <input type="email" class="form-control" id="email">
-      <div class="alert alert-danger">
+      <input type="email" class="form-control" id="email" formControlName="email" #email>
+      <div *ngIf="form.controls.email.invalid && (form.controls.email.dirty || form.controls.email.touched)"
+           class="alert alert-danger">
 
-        <div>
+        <div *ngIf="form.controls.email.errors?.['email']">
           Debe ser un email
         </div>
       </div>
@@ -36,10 +39,11 @@
 
     <div class="mb-3">
       <label for="telefono" class="form-label">Tel:</label>
-      <input type="telephone" class="form-control" id="telefono">
-      <div class="alert alert-danger">
+      <input type="telephone" class="form-control" id="telefono" formControlName="telefono" #telefono>
+      <div *ngIf="form.controls.telefono.invalid && (form.controls.telefono.dirty || form.controls.telefono.touched)"
+           class="alert alert-danger">
 
-        <div>
+        <div *ngIf="form.controls.telefono.errors?.['minlength']">
           Debe ser un numero de telefono válido
         </div>
       </div>
@@ -47,8 +51,18 @@
 
     <div class="mb-3">
       <label for="comentario" class="form-label">Comentario</label>
-      <textarea class="form-control" id="comentario" rows="3"></textarea>
+      <textarea class="form-control" id="comentario" rows="3" formControlName="comentario" #comentario></textarea>
     </div>
     <input type="submit" class="btn btn-success">
   </form>
+</div>
+
+<hr>
+
+<div class="container">
+  nombre: {{nombre.value}} <br>
+  apellido: {{apellido.value}} <br>
+  email: {{email.value}} <br>
+  telefono: {{telefono.value}} <br>
+  comentario: {{comentario.value}}
 </div>
